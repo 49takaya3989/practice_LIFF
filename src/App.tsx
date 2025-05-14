@@ -7,18 +7,20 @@ function App() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    liff
-      .init({
-        liffId: import.meta.env.VITE_LIFF_ID
-      })
-      .then(() => {
-        setMessage("LIFF init succeeded.");
-      })
-      .catch((e: Error) => {
-        setMessage("LIFF init failed.");
-        setError(`${e}`);
-      });
-  });
+    const liffId = import.meta.env.VITE_LIFF_ID;
+
+    if (liffId !== "") {
+      liff
+        .init({ liffId })
+        .then(() => {
+          setMessage("LIFF init succeeded.");
+        })
+        .catch((e: Error) => {
+          setMessage("LIFF init failed.");
+          setError(`${e}`);
+        });
+    }
+  }, []);
 
   return (
     <div className="App">
